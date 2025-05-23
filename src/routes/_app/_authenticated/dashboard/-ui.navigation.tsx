@@ -28,7 +28,12 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 	const navigate = useNavigate();
 	const isDashboardPath = matchRoute({ to: "/dashboard" });
 	const isSettingsPath = matchRoute({ to: "/dashboard/settings" });
-	// const isBillingPath = matchRoute({ to: BillingSettingsRoute.fullPath });
+	const isLeaderboardPath = matchRoute({
+		to: "/dashboard/leaderboard",
+	});
+	const isHistoryPath = matchRoute({
+		to: "/dashboard/history",
+	});
 
 	if (!user) {
 		return null;
@@ -100,23 +105,6 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 								</div>
 								<Check className="h-[18px] w-[18px] stroke-[1.5px] text-primary/60" />
 							</DropdownMenuItem>
-
-							{/* {user.subscription?.planKey === PLANS.FREE && (
-                <>
-                  <DropdownMenuSeparator className="mx-0 my-2" />
-                  <DropdownMenuItem className="p-0 focus:bg-transparent">
-                    <Button
-                      size="sm"
-                      className="w-full"
-                      onClick={() =>
-                        navigate({ to: BillingSettingsRoute.fullPath })
-                      }
-                    >
-                      Upgrade to PRO
-                    </Button>
-                  </DropdownMenuItem>
-                </>
-              )} */}
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
@@ -187,17 +175,6 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 								<ThemeSwitcher />
 							</DropdownMenuItem>
 
-							{/* <DropdownMenuItem
-                className={cn(
-                  "group flex h-9 justify-between rounded-md px-2 hover:bg-transparent",
-                )}
-              >
-                <span className="w-full text-sm text-primary/60 group-hover:text-primary group-focus:text-primary">
-                  Language
-                </span>
-                <LanguageSwitcher />
-              </DropdownMenuItem> */}
-
 							<DropdownMenuSeparator className="mx-0 my-2" />
 
 							<SignOutButton redirectUrl="/">
@@ -232,6 +209,36 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 				<div
 					className={cn(
 						"flex h-12 items-center border-b-2",
+						isLeaderboardPath ? "border-primary" : "border-transparent",
+					)}
+				>
+					<Link
+						to={"/dashboard/leaderboard"}
+						className={cn(
+							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+						)}
+					>
+						Leaderboard
+					</Link>
+				</div>
+				<div
+					className={cn(
+						"flex h-12 items-center border-b-2",
+						isHistoryPath ? "border-primary" : "border-transparent",
+					)}
+				>
+					<Link
+						to={"/dashboard/history"}
+						className={cn(
+							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+						)}
+					>
+						History
+					</Link>
+				</div>
+				<div
+					className={cn(
+						"flex h-12 items-center border-b-2",
 						isSettingsPath ? "border-primary" : "border-transparent",
 					)}
 				>
@@ -244,21 +251,6 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 						Settings
 					</Link>
 				</div>
-				{/* <div
-					className={cn(
-						"flex h-12 items-center border-b-2",
-						isBillingPath ? "border-primary" : "border-transparent",
-					)}
-				>
-					<Link
-						to={BillingSettingsRoute.fullPath}
-						className={cn(
-							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
-						)}
-					>
-						Billing
-					</Link>
-				</div> */}
 			</div>
 		</nav>
 	);

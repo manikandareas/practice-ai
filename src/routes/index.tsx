@@ -16,9 +16,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
 	const { isLoading, isAuthenticated } = useConvexAuth();
-	const theme = "dark";
 	return (
-		<div className="relative flex h-full w-full flex-col bg-card">
+		<div className="relative flex h-full w-full flex-col bg-background">
 			{/* Navigation */}
 			<div className="sticky top-0 z-50 mx-auto flex w-full max-w-screen-lg items-center justify-between p-6 py-3">
 				<Link to="/" className="flex h-10 items-center gap-1">
@@ -696,10 +695,12 @@ function Index() {
 			<img
 				src={ShadowPNG}
 				alt="Hero"
-				className={`fixed left-0 top-0 z-0 h-full w-full opacity-60 ${theme === "dark" ? "invert" : ""}`}
+				className={
+					"fixed left-0 top-0 z-0 h-full w-full opacity-60 dark:invert"
+				}
 			/>
 			<div className="base-grid fixed h-screen w-screen opacity-40" />
-			<div className="fixed bottom-0 h-screen w-screen bg-gradient-to-t from-[hsl(var(--card))] to-transparent" />
+			<div className="fixed bottom-0 h-screen w-screen bg-gradient-to-t from-background to-transparent" />
 		</div>
 	);
 }
