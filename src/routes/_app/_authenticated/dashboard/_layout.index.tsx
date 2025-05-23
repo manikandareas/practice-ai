@@ -1,9 +1,11 @@
 import { HeaderConfiguration } from "@/components/header-provider";
 import { buttonVariants } from "@/components/ui/button";
+import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
 import siteConfig from "@/site.config";
 import { createFileRoute } from "@tanstack/react-router";
-import { ExternalLink, Plus } from "lucide-react";
+import { BookOpen, ChevronUp, FileText, Lightbulb } from "lucide-react";
+import { PromptInputArea } from "./-ui.prompt-input-area";
 
 export const Route = createFileRoute("/_app/_authenticated/dashboard/_layout/")(
 	{
@@ -19,65 +21,101 @@ function RouteComponent() {
 	return (
 		<>
 			<HeaderConfiguration
-				headerDescription="Manage your Apps and view your usage."
-				headerTitle="Dashboard"
+				headerDescription="Generate quizzes from PDFs or text prompts."
+				headerTitle="Quiz Generator"
+				isVisible={false}
 			/>
-			<div className="flex h-full w-full bg-background px-6 py-8">
-				<div className="z-10 mx-auto flex h-full w-full max-w-screen-xl gap-12">
-					<div className="flex w-full flex-col rounded-lg border border-border bg-card">
-						<div className="flex w-full flex-col rounded-lg p-6">
-							<div className="flex flex-col gap-2">
-								<h2 className="text-xl font-medium text-foreground">
-									Get Started
-								</h2>
-								<p className="text-sm font-normal text-muted-foreground">
-									Explore the Dashboard and get started with your first app.
-								</p>
-							</div>
-						</div>
-						<div className="flex w-full px-6">
-							<div className="w-full border-b border-border" />
-						</div>
-						<div className="relative mx-auto flex w-full  flex-col items-center p-6">
-							<div className="relative flex w-full flex-col items-center justify-center gap-6 overflow-hidden rounded-lg border border-border bg-accent/50 px-6 py-24">
-								<div className="z-10 flex max-w-[460px] flex-col items-center gap-4">
-									<div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-background hover:bg-accent/20 transition-colors">
-										<Plus className="h-8 w-8 stroke-[1.5px] text-muted-foreground" />
-									</div>
-									<div className="flex flex-col items-center gap-2">
-										<p className="text-base font-medium text-foreground">
-											Create your first app
-										</p>
-										<p className="text-center text-base font-normal text-muted-foreground">
-											Create your first app and start building with Convex.
-										</p>
-										<span className="hidden select-none items-center rounded-full bg-green-500/5 px-3 py-1 text-xs font-medium tracking-tight text-green-700 ring-1 ring-inset ring-green-600/20 backdrop-blur-md dark:bg-green-900/40 dark:text-green-100 md:flex">
-											TIP: Try changing the language!
-										</span>
-									</div>
-								</div>
-								<div className="z-10 flex items-center justify-center">
-									<a
-										target="_blank"
-										rel="noreferrer"
-										href="https://github.com/get-convex/convex-saas/tree/main/docs"
-										className={cn(
-											`${buttonVariants({ variant: "ghost", size: "sm" })} gap-2`,
-										)}
-									>
-										<span className="text-sm font-medium text-muted-foreground group-hover:text-foreground">
-											Explore Documentation
-										</span>
-										<ExternalLink className="h-4 w-4 stroke-[1.5px] text-muted-foreground group-hover:text-foreground" />
-									</a>
-								</div>
-								<div className="base-grid absolute h-full w-full opacity-40" />
-								<div className="absolute bottom-0 h-full w-full bg-gradient-to-t from-card to-transparent" />
-							</div>
-						</div>
+			<div className="flex min-h-[80vh] w-full flex-col items-center justify-center bg-background p-4 sm:p-6 md:p-8">
+				<div className="w-full max-w-3xl">
+					{/* Upgrade Button */}
+					<div className="mb-8 flex justify-center">
+						<button
+							type="button"
+							className={cn(
+								buttonVariants({ variant: "outline" }),
+								"gap-2 rounded-full border-border bg-card hover:bg-accent",
+							)}
+						>
+							<ChevronUp className="h-4 w-4" />
+							Upgrade free plan to full version
+						</button>
 					</div>
+
+					{/* Logo Placeholder - Replace with actual logo component if available */}
+					<div className="mb-8 flex justify-center">
+						{/* <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground"> */}
+						{/* Placeholder for a logo, e.g., a simple shape or an SVG icon */}
+						<Logo className="h-16 w-16" />
+						{/* </div> */}
+					</div>
+
+					<h1 className="mb-10 text-center text-4xl font-semibold text-foreground sm:text-5xl">
+						What can I help you with today?
+					</h1>
+
+					<PromptInputArea />
+
+					{/* Example Prompts */}
+					<div className="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+						<ExamplePromptCard
+							icon={<Lightbulb className="h-5 w-5 text-primary" />}
+							title="Explain Photosynthesis"
+							description="Describe the process of photosynthesis."
+						/>
+						<ExamplePromptCard
+							icon={<FileText className="h-5 w-5 text-primary" />}
+							title="Compare Solids, Liquids, and Gases"
+							description="Compare the properties of solids, liquids, and gases."
+						/>
+						<ExamplePromptCard
+							icon={<BookOpen className="h-5 w-5 text-primary" />}
+							title="Explore the Causes of World War I"
+							description="Identify the causes that led to World War I."
+						/>
+					</div>
+
+					{/* Footer Text */}
+					<p className="text-center text-sm text-muted-foreground">
+						Our AI-driven solution prioritizes your privacy and data security.
+						<a
+							href="/privacy"
+							className="ml-1 font-medium text-foreground hover:underline"
+						>
+							{" "}
+							{/* Changed href to a more appropriate value */}
+							Privacy & Corporate AI
+						</a>
+					</p>
 				</div>
 			</div>
 		</>
+	);
+}
+
+// Helper component for example prompt cards
+interface ExamplePromptCardProps {
+	icon: React.ReactNode;
+	title: string;
+	description: string;
+}
+
+function ExamplePromptCard({
+	icon,
+	title,
+	description,
+}: ExamplePromptCardProps) {
+	return (
+		<button
+			type="button"
+			className="flex flex-col items-start gap-3 rounded-xl border border-border bg-card p-4 text-left shadow-sm transition-all hover:shadow-md hover:bg-accent/50 active:scale-[0.99]"
+		>
+			<div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+				{icon}
+			</div>
+			<div className="flex flex-col">
+				<h3 className="text-base font-semibold text-foreground">{title}</h3>
+				<p className="text-sm text-muted-foreground">{description}</p>
+			</div>
+		</button>
 	);
 }

@@ -1,7 +1,10 @@
 import {
+	BarChart3,
 	Check,
 	ChevronDown,
 	ChevronUp,
+	History,
+	LayoutDashboard,
 	LogOut,
 	Settings,
 	Slash,
@@ -189,8 +192,8 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 					</DropdownMenu>
 				</div>
 			</div>
-
-			<div className="mx-auto flex w-full max-w-screen-xl items-center gap-3">
+			{/* Navigation Links */}
+			<div className="mx-auto flex w-full max-w-screen-xl items-center justify-around md:justify-start md:gap-3">
 				<div
 					className={cn(
 						"flex h-12 items-center border-b-2",
@@ -199,11 +202,14 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 				>
 					<Link
 						to={"/dashboard"}
+						title="Dashboard"
 						className={cn(
-							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+							buttonVariants({ variant: "ghost" }),
+							"flex h-full w-full flex-row items-center justify-center gap-2 px-3 text-primary/80 md:w-auto md:justify-start",
 						)}
 					>
-						Dashboard
+						<LayoutDashboard className="h-5 w-5 flex-shrink-0" />
+						<span className="hidden md:inline-block">Dashboard</span>
 					</Link>
 				</div>
 				<div
@@ -214,11 +220,14 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 				>
 					<Link
 						to={"/dashboard/leaderboard"}
+						title="Leaderboard"
 						className={cn(
-							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+							buttonVariants({ variant: "ghost" }),
+							"flex h-full w-full flex-row items-center justify-center gap-2 px-3 text-primary/80 md:w-auto md:justify-start",
 						)}
 					>
-						Leaderboard
+						<BarChart3 className="h-5 w-5 flex-shrink-0" />
+						<span className="hidden md:inline-block">Leaderboard</span>
 					</Link>
 				</div>
 				<div
@@ -229,11 +238,14 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 				>
 					<Link
 						to={"/dashboard/history"}
+						title="History"
 						className={cn(
-							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+							buttonVariants({ variant: "ghost" }),
+							"flex h-full w-full flex-row items-center justify-center gap-2 px-3 text-primary/80 md:w-auto md:justify-start",
 						)}
 					>
-						History
+						<History className="h-5 w-5 flex-shrink-0" />
+						<span className="hidden md:inline-block">History</span>
 					</Link>
 				</div>
 				<div
@@ -244,11 +256,14 @@ export function Navigation({ user }: { user: Doc<"users"> }) {
 				>
 					<Link
 						to={"/dashboard/settings"}
+						title="Settings"
 						className={cn(
-							`${buttonVariants({ variant: "ghost", size: "sm" })} text-primary/80`,
+							buttonVariants({ variant: "ghost" }),
+							"flex h-full w-full flex-row items-center justify-center gap-2 px-3 text-primary/80 md:w-auto md:justify-start",
 						)}
 					>
-						Settings
+						<Settings className="h-5 w-5 flex-shrink-0" />
+						<span className="hidden md:inline-block">Settings</span>
 					</Link>
 				</div>
 			</div>

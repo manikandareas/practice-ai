@@ -5,6 +5,8 @@ export type HeaderProviderState = {
 		headerTitle?: string;
 		headerDescription?: string;
 	};
+	isHeaderVisible?: boolean;
+	setIsHeaderVisible?: (isVisible: boolean) => void;
 	setHeaderConfig?: (config: HeaderProviderState["headerConfig"]) => void;
 };
 
@@ -19,11 +21,15 @@ export const HeaderProvider: React.FC<React.PropsWithChildren> = ({
 		headerTitle: "Dashboard",
 		headerDescription: "Manage your Apps and view your usage.",
 	});
+	const [isHeaderVisible, setIsHeaderVisible] = React.useState(true);
+
 	return (
 		<HeaderProviderContext.Provider
 			value={{
 				headerConfig,
 				setHeaderConfig,
+				isHeaderVisible,
+				setIsHeaderVisible,
 			}}
 		>
 			{children}
@@ -42,11 +48,13 @@ export const useHeader = () => {
 type HeaderConfigurationProps = {
 	headerTitle?: string;
 	headerDescription?: string;
+	isVisible: boolean;
 };
-export const HeaderConfiguration: React.FC<HeaderConfigurationProps> = (
-	props,
-) => {
-	const { headerConfig, setHeaderConfig } = useHeader();
+export const HeaderConfiguration: React.FC<HeaderConfigurationProps> = ({
+	isVisible = true,
+	...props
+}: HeaderConfigurationProps) => {
+	const { headerConfig, setHeaderConfig, setIsHeaderVisible } = useHeader();
 
 	React.useEffect(() => {
 		if (setHeaderConfig) {
@@ -57,6 +65,12 @@ export const HeaderConfiguration: React.FC<HeaderConfigurationProps> = (
 			});
 		}
 	}, [props.headerTitle, props.headerDescription, setHeaderConfig]);
+
+	React.useEffect(() => {
+		if (setIsHeaderVisible) {
+			setIsHeaderVisible(isVisible);
+		}
+	}, [isVisible, setIsHeaderVisible]);
 	// Return null to avoid rendering anything
 
 	return null;
